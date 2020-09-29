@@ -1,6 +1,5 @@
 <template>
   <div class="login-container">
-    <h2>这里是登录界面</h2>
     <div class="login-box">
         <el-form :model="loginForm" :rules="loginRules">
             <el-form-item  prop="username">
@@ -57,14 +56,17 @@ export default {
 <style scoped>
 .login-container{
     height: 100%;
-    background: url('http://end.haixue.com/images/admin-logbg.png') no-repeat center center;
+    background: #2d2d2d;
     overflow: hidden;
 }
 .login-box{
     width: 340px;
     position: relative;
-    top: 50%;
+    top: 20%;
     margin: 0 auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
 }
 .login-btn{
     text-align: right;
