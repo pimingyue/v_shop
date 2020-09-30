@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="login-box">
-        <el-form :model="loginForm" :rules="loginRules">
+        <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
             <el-form-item  prop="username">
                 <el-input 
                     v-model="loginForm.username"
@@ -13,6 +13,8 @@
                 <el-input 
                     v-model="loginForm.password"
                     prefix-icon="el-icon-lock"
+                    type="password"
+                    show-password
                     ></el-input>
             </el-form-item>
 
@@ -45,8 +47,23 @@ export default {
        
     },
     methods:{
-        resetForm:()=>{
+        login() {
+            this.$refs.loginFormRef.validate((valid)=>{
+                console.log(valid)
+                this.$http.post('login',this.loginForm)
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(err => {
+                    console.error(err); 
+                })
+            })
 
+        },
+        resetForm() {
+            // this.$refs(loginFormRef).resetFields();
+            this.$refs.loginFormRef.resetFields();
+         
         }
     }
 
