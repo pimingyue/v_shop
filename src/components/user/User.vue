@@ -95,26 +95,32 @@
     </el-card>
 
    
-    <el-dialog title="收货地址" :visible.sync="dialogVisible" width="50%">
-        <el-form :model="form">
-            <el-form-item label="姓名" :label-width="formLabelWidth">
-                <el-input  autocomplete="off" ></el-input>
+    <el-dialog title="添加用户" :visible.sync="dialogVisible" width="50%">
+        <el-form :model="addUserForm" :rules="addUserRules" ref="addUserFormRef">
+            <el-form-item label="姓名" :label-width="formLabelWidth" prop="username">
+                <el-input  autocomplete="off" v-model="addUserForm.username" ></el-input>
             </el-form-item>
-             <el-form-item label="密码" :label-width="formLabelWidth">
-                <el-input  autocomplete="off" ></el-input>
+             <el-form-item 
+                label="密码" 
+                :label-width="formLabelWidth" 
+                prop="userpass">
+                <el-input  autocomplete="off" v-model="addUserForm.password" ></el-input>
             </el-form-item>
-             <el-form-item label="邮箱" :label-width="formLabelWidth">
-                <el-input  autocomplete="off"></el-input>
+             <el-form-item 
+                label="邮箱" 
+                :label-width="formLabelWidth"
+                 prop="email">
+                <el-input  autocomplete="off" v-model="addUserForm.email"></el-input>
             </el-form-item>
 
-            <el-form-item label="手机号码" :label-width="formLabelWidth">
-                <el-input  autocomplete="off"></el-input>
+            <el-form-item label="手机号码" :label-width="formLabelWidth" prop="mobile">
+                <el-input  autocomplete="off" v-model="addUserForm.mobile"></el-input>
             </el-form-item>
             
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" >确 定</el-button>
+            <el-button type="primary" @click="addUser" >确 定</el-button>
         </div>
     </el-dialog>
   </div>
@@ -123,6 +129,32 @@
 <script>
 export default {
     data(){
+        var checkEmail = (rule,value,callback) =>{
+
+            const regEmail = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/
+
+            if (regEmail.test(value)) {
+                return callback()
+            }
+
+            callback(new Error('请输入合法邮箱'))
+        
+        }
+
+        var checkMobile = (rule,value,callback) =>{
+            if(!value){
+                return callback(new Error('手机号不能为空'))
+            }
+
+            const regMobile = /^(0|86|17951)?(13[0-9]|15[0123456789]|17[678]|18[0-9]|14[57])[0-9]{8}$/
+
+             if (regMobile.test(value)) {
+                return callback()
+            }
+
+            callback(new Error('请输入合法手机号码'))
+
+        };
         return{
             userList:[],
             queryInfo:{
@@ -133,7 +165,30 @@ export default {
             },
             total:0,
             dialogVisible: true,
-            formLabelWidth:'120px'
+            formLabelWidth:'120px',
+            addUserForm:{
+                username:'',
+                password:'',
+                email:'',
+                mobile:''
+
+            },
+            addUserRules:{
+                 username: [
+                        { required: true, message: '请输入用户名', trigger: 'blur' },
+                        { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                    ],
+                    userpass:[
+                          { required: true, message: '请输入初始密码', trigger: 'blur' },
+                           { min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'blur' }
+                    ],
+                    email:[
+                        { validator: checkEmail,trigger:'blur' }
+                    ],
+                     mobile:[
+                        { validator: checkMobile,trigger:'blur' }
+                    ]
+            }
           
         }
     },
@@ -181,6 +236,14 @@ export default {
              })
            
         },
+
+        addUser(){
+            this.$refs.addUserFormRef.validator((valid)=>{
+                if(valid){
+                    
+                }
+            })
+        }
         
     },
     
@@ -214,7 +277,7 @@ export default {
 
 .el-form-item{
     width: 60%;
-    margin: 10px auto;
+    margin: 10px auto 30px auto;
 }
 
 
