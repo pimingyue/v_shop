@@ -132,7 +132,7 @@ export default {
     box-sizing: border-box;
 }
 .el-main{
-    background: #9bbdf1;
+    background: #f1f1f1;
 }
 
 </style>>

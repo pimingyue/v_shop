@@ -4,10 +4,15 @@ import Login from '@/components/Login'
 import Home from '@/components/Home'
 import Welcome from '@/components/Welcome'
 import User from '@/components/user/User'
+import Add from '@/components/goods/Add'
+import Roles from '@/components/roles/Roles'
+import Rights from '@/components/roles/Rights'
+import Error from '@/components/Error'
 
 Vue.use(Router)
 
 const router = new Router({
+    mode: 'history',
     routes: [{
             path: '/',
             redirect: '/login'
@@ -29,7 +34,23 @@ const router = new Router({
                 path: '/users',
                 component: User,
 
+            }, {
+                path: '/goods',
+                component: Add
+
+            }, {
+                path: '/roles',
+                component: Roles
+
+            }, {
+                path: '/rights',
+                component: Rights
+
             }]
+        }, {
+            path: '*',
+            name: 'Error',
+            component: Error
         }
     ]
 })

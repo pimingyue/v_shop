@@ -21,7 +21,8 @@ import {
     Switch,
     Tooltip,
     Pagination,
-    Dialog
+    Dialog,
+    Upload
 
 
 } from 'element-ui'
@@ -48,6 +49,7 @@ Vue.use(Switch)
 Vue.use(Tooltip)
 Vue.use(Pagination)
 Vue.use(Dialog)
+Vue.use(Upload)
 
 Vue.component(Message)
 
